@@ -14,7 +14,7 @@ object FirebaseAdmin {
     private val options: FirebaseOptions = FirebaseOptions.builder()
         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
         .build()
-//
+
     fun init(): FirebaseApp = FirebaseApp.initializeApp(options)
 }
 
