@@ -5,9 +5,11 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import java.io.FileInputStream
 
+
 object FirebaseAdmin {
+    val token = System.getenv("TOKEN")
     private val serviceAccount: FileInputStream =
-        FileInputStream("src/main/resources/register-client-e877a-firebase-adminsdk-r4ios-0340c84fce.json")
+        FileInputStream(token)
 
     private val options: FirebaseOptions = FirebaseOptions.builder()
         .setCredentials(GoogleCredentials.fromStream(serviceAccount))

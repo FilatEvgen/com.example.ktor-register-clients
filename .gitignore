@@ -3,7 +3,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-src/main/resources/register-client-e877a-firebase-adminsdk-r4ios-0340c84fce.json
+resources/register-client-e877a-firebase-adminsdk-r4ios-0340c84fce.json
 ### STS ###
 .apt_generated
 .classpath
