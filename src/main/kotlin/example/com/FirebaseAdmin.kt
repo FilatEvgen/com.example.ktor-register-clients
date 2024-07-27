@@ -16,5 +16,6 @@ object FirebaseAdmin {
         .build()
 
     fun init(): FirebaseApp = FirebaseApp.initializeApp(options)
+
 }
 
