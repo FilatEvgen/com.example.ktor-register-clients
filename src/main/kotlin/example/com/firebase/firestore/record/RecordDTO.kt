@@ -1,4 +1,4 @@
-package example.com.Database.Record
+package example.com.firebase.firestore.record
 
 data class RecordDTO(
     val id: Int,

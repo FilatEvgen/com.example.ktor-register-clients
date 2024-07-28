@@ -1,4 +1,4 @@
-package example.com
+package example.com.firebase
 
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
@@ -16,6 +16,5 @@ object FirebaseAdmin {
         .build()
 
     fun init(): FirebaseApp = FirebaseApp.initializeApp(options)
-//zsfas
 }
 

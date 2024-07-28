@@ -1,4 +1,4 @@
-package example.com.Database.Client
+package example.com.firebase.firestore.client
 
 data class ClientDTO (
     val name: String,

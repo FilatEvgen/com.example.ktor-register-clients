@@ -2,6 +2,7 @@ package example.com
 
 import com.google.cloud.firestore.Firestore
 import com.google.firebase.cloud.FirestoreClient
+import example.com.firebase.FirebaseAdmin
 import example.com.plugins.configureRouting
 import example.com.plugins.configureSerialization
 import example.com.plugins.configureSockets

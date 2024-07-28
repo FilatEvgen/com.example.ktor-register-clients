@@ -1,7 +1,6 @@
-package example.com.Database.Master
+package example.com.firebase.firestore.master
 
 data class MasterDTO(
-    val id: Int,
     val name: String,
     val service: String,
     val phone: String,
