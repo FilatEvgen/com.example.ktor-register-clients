@@ -4,7 +4,7 @@ import example.com.firestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-object Record {
+object Records {
     private const val COLLECTION_NAME = "record"
     private const val RECORD_ID = "id"
     private const val RECORD_MASTER = "master"

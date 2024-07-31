@@ -1,14 +1,14 @@
 package example.com.plugins
 
-import example.com.configureFirebaseTestRoute
-import io.ktor.resources.*
+import example.com.features.client.configureClientRouting
+import example.com.features.master.configureMasterRouting
+import example.com.features.record.configureRecordRouting
+import example.com.features.service.configureServiceRouting
 import io.ktor.server.application.*
-import io.ktor.server.resources.*
-import io.ktor.server.resources.Resources
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
 
 fun Application.configureRouting() {
-    configureFirebaseTestRoute()
+    configureMasterRouting()
+    configureClientRouting()
+    configureRecordRouting()
+    configureServiceRouting()
 }
