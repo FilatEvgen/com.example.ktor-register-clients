@@ -9,7 +9,8 @@ fun Application.configureRecordRouting() {
             val controller = RecordController(call)
             controller.createRecord()
         }
-        post("/records/get") {
+        get("/records/{id}") {
+            val id = call.parameters["id"]
             val controller = RecordController(call)
             controller.getRecord()
         }

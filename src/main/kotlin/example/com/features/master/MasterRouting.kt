@@ -9,7 +9,7 @@ fun Application.configureMasterRouting() {
             val controller = MasterController(call)
             controller.registerMaster()
         }
-        post("/masters/get") {
+        get("/masters/get") {
             val controller = MasterController(call)
             controller.getMaster()
         }

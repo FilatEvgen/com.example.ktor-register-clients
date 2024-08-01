@@ -26,11 +26,11 @@ object Records {
         val recordDocument = recordDocumentRef.get().get()
         return@withContext if(recordDocument.exists()){
             RecordDTO(
-                id = recordDocument.getLong(RECORD_ID)?.toInt()?: 0,
+                id = recordDocument.getString(RECORD_ID)?: "",
                 master = recordDocument.getString(RECORD_MASTER)?: "",
                 client = recordDocument.getString(RECORD_CLIENT)?: "",
                 date = recordDocument.getString(RECORD_DATE)?: "",
-                time = recordDocument.getLong(RECORD_TIME)?: 0L,
+                time = recordDocument.getString(RECORD_TIME)?: "",
                 service = recordDocument.getString(RECORD_SERVICE)?: "",
             )
         }else{null}

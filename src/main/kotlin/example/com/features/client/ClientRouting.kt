@@ -9,7 +9,7 @@ fun Application.configureClientRouting() {
             val controller = ClientController(call)
             controller.registerClient()
         }
-        post("/clients/get") {
+        get("/clients/{phone}") {
             val controller = ClientController(call)
             controller.getClient()
         }

@@ -19,12 +19,12 @@ class ServiceController(private val applicationCall: ApplicationCall) {
     }
 
     suspend fun getService() {
-        val service = applicationCall.receive<Service>()
-        if (service.id.isEmpty()) {
+        val id = applicationCall.parameters["id"]
+        if (id.isNullOrEmpty()) {
             applicationCall.respond(HttpStatusCode.BadRequest, "ID услуги не передан")
             return
         }
-        val serviceDTO = Services.fetchService(service.id.toInt())
+        val serviceDTO = Services.fetchService(id.toInt())
         if (serviceDTO != null) {
             applicationCall.respond(HttpStatusCode.OK, serviceDTO)
         } else {

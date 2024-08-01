@@ -11,11 +11,11 @@ class RecordController(private val applicationCall: ApplicationCall) {
     suspend fun createRecord() {
         val recordRemote = applicationCall.receive<Record>()
         val recordDTO = RecordDTO(
-            id = recordRemote.id.toInt(),
+            id = "",
             master = recordRemote.master,
             client = recordRemote.client,
             date = recordRemote.date,
-            time = recordRemote.time.toLong(),
+            time = recordRemote.time,
             service = recordRemote.service
         )
         Records.insert(recordDTO)
@@ -23,12 +23,12 @@ class RecordController(private val applicationCall: ApplicationCall) {
     }
 
     suspend fun getRecord() {
-        val record = applicationCall.receive<Record>()
-        if (record.id.isEmpty()) {
+        val id = applicationCall.parameters["id"]
+        if (id.isNullOrEmpty()) {
             applicationCall.respond(HttpStatusCode.BadRequest, "ID записи не передан")
             return
         }
-        val recordDTO = Records.fetchRecord(record.id.toInt())
+        val recordDTO = Records.fetchRecord(id.toInt())
         if (recordDTO != null) {
             applicationCall.respond(HttpStatusCode.OK, recordDTO)
         } else {
