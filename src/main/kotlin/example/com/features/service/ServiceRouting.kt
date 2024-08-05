@@ -9,7 +9,7 @@ fun Application.configureServiceRouting() {
             val controller = ServiceController(call)
             controller.createService()
         }
-        get("/services/{id}") {
+        get("/services") {
             val controller = ServiceController(call)
             controller.getService()
         }

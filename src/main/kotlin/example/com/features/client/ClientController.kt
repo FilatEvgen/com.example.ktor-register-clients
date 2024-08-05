@@ -25,12 +25,12 @@ class ClientController(private val applicationCall: ApplicationCall) {
     }
 
     suspend fun getClient() {
-        val phone = applicationCall.parameters["phone"]
+        val phone = applicationCall.request.headers["PhoneId"]?: ""
         if (phone.isNullOrEmpty()) {
             applicationCall.respond(HttpStatusCode.BadRequest, "Номер телефона не передан")
             return
         }
-        val clientDTO = Clients.fetchClient(phone)
+        val clientDTO = Clients.fetchClient(phone)?: ""
         if (clientDTO != null) {
             applicationCall.respond(HttpStatusCode.OK, clientDTO)
         } else {

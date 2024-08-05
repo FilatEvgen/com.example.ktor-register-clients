@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 
 data class Service(
-    val id: String,
+    val id: Int,
     val name: String,
 )

@@ -26,13 +26,13 @@ class MasterController(private val applicationCall: ApplicationCall) {
     }
 
     suspend fun getMaster() {
-        val phone = applicationCall.request.queryParameters["phone"]
+        val phone = applicationCall.request.queryParameters["phone"]?: ""
         if (phone.isNullOrEmpty()) {
             applicationCall.respond(HttpStatusCode.BadRequest, "Номер телефона не передан")
             return
         }
         val formatedPhone = "+$phone"
-        val masterDTO = Masters.fetchMaster(formatedPhone)
+        val masterDTO = Masters.fetchMaster(formatedPhone)?: ""
         if (masterDTO != null) {
             applicationCall.respond(HttpStatusCode.OK, masterDTO)
         } else {
