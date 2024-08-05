@@ -6,31 +6,29 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import kotlin.random.Random
 
 class ClientController(private val applicationCall: ApplicationCall) {
     suspend fun registerClient() {
         val clientRemote = applicationCall.receive<Client>()
-        val existingClient = Clients.fetchClient(clientRemote.phone)
-        if (existingClient != null) {
-            applicationCall.respond(HttpStatusCode.Conflict, "Пользователь уже зарегестрирован")
-        } else {
-            val clientDTO = ClientDTO(
-                name = clientRemote.name,
-                phone = clientRemote.phone,
-                userName = clientRemote.userName
-            )
-            Clients.insert(clientDTO)
-            applicationCall.respond(HttpStatusCode.Created, clientDTO)
-        }
+        val clientId = Random.nextInt(1, 10000)
+        val clientDTO = ClientDTO(
+            id = clientId,
+            phone = clientRemote.phone,
+            name = clientRemote.name,
+            userName = clientRemote.userName
+        )
+        Clients.insert(clientDTO)
+        applicationCall.respond(HttpStatusCode.Created, mapOf("clientId" to clientId))
     }
 
     suspend fun getClient() {
-        val phone = applicationCall.request.headers["PhoneId"]?: ""
-        if (phone.isNullOrEmpty()) {
-            applicationCall.respond(HttpStatusCode.BadRequest, "Номер телефона не передан")
+        val clientId = applicationCall.request.headers["ClientId"]?.toIntOrNull() ?: 0
+        if (clientId == 0) {
+            applicationCall.respond(HttpStatusCode.BadRequest, "Идентификатор клиента не передан")
             return
         }
-        val clientDTO = Clients.fetchClient(phone)?: ""
+        val clientDTO = Clients.fetchClient(clientId)
         if (clientDTO != null) {
             applicationCall.respond(HttpStatusCode.OK, clientDTO)
         } else {
