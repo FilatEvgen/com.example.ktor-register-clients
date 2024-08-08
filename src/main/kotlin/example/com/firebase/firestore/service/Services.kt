@@ -21,7 +21,7 @@ object Services {
         val serviceDocument =serviceDocumentRef.get().get()
         return@withContext if (serviceDocument.exists()){
             ServiceDTO(
-                id = serviceDocument.getLong(SERVICE_ID)?.toInt()?: 0,
+                id = serviceDocument.getLong(SERVICE_ID)?: 0L,
                 name = serviceDocument.getString(SERVICE_NAME)?: "",
             )
         }else{null}

@@ -4,10 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Record(
-    val id: Int,
+    val id: Long,
     val master: String,
     val client: String,
     val date: String,
-    val time: Long,
+    val time: String,
     val service: String,
 )

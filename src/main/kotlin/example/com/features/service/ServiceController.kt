@@ -1,34 +1,34 @@
-package example.com.features.service
+    package example.com.features.service
 
-import example.com.firebase.firestore.service.ServiceDTO
-import example.com.firebase.firestore.service.Services
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
+    import example.com.firebase.firestore.service.ServiceDTO
+    import example.com.firebase.firestore.service.Services
+    import io.ktor.http.*
+    import io.ktor.server.application.*
+    import io.ktor.server.request.*
+    import io.ktor.server.response.*
 
-class ServiceController(private val applicationCall: ApplicationCall) {
-    suspend fun createService() {
-        val serviceRemote = applicationCall.receive<Service>()
-        val serviceDTO = ServiceDTO(
-            id = serviceRemote.id.toInt(),
-            name = serviceRemote.name
-        )
-        Services.insert(serviceDTO)
-        applicationCall.respond(HttpStatusCode.Created, serviceDTO)
-    }
-
-    suspend fun getService() {
-        val id = applicationCall.request.headers["id"]?: ""
-        if (id.isNullOrEmpty()) {
-            applicationCall.respond(HttpStatusCode.BadRequest, "ID услуги не передан")
-            return
+    class ServiceController(private val applicationCall: ApplicationCall) {
+        suspend fun createService() {
+            val serviceRemote = applicationCall.receive<Service>()
+            val serviceDTO = ServiceDTO(
+                id = serviceRemote.id,
+                name = serviceRemote.name
+            )
+            Services.insert(serviceDTO)
+            applicationCall.respond(HttpStatusCode.Created, "Услуга успешно создана")
         }
-        val serviceDTO = Services.fetchService(id.toInt())?: 0
-        if (serviceDTO != null) {
-            applicationCall.respond(HttpStatusCode.OK, serviceDTO)
-        } else {
-            applicationCall.respond(HttpStatusCode.NotFound, "Услуга не найдена")
+
+        suspend fun getService() {
+            val id = applicationCall.request.headers["id"]?: ""
+            if (id.isNullOrEmpty()) {
+                applicationCall.respond(HttpStatusCode.BadRequest, "ID услуги не передан")
+                return
+            }
+            val serviceDTO = Services.fetchService(id.toInt())
+            if (serviceDTO != null) {
+                applicationCall.respond(HttpStatusCode.OK, serviceDTO)
+            } else {
+                applicationCall.respond(HttpStatusCode.NotFound, "Услуга не найдена")
+            }
         }
     }
-}

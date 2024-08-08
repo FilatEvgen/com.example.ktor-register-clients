@@ -6,27 +6,26 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import java.util.*
 import kotlin.random.Random
 
 class ClientController(private val applicationCall: ApplicationCall) {
     suspend fun registerClient() {
         val clientRemote = applicationCall.receive<Client>()
-        val clientId = Random.nextInt(1, 10000)
+        val clientId = clientRemote.id ?: UUID.randomUUID().mostSignificantBits
         val clientDTO = ClientDTO(
-            id = clientId,
+            id = clientId.toLong(),
             phone = clientRemote.phone,
             name = clientRemote.name,
             userName = clientRemote.userName
         )
         Clients.insert(clientDTO)
-        applicationCall.respond(HttpStatusCode.Created, mapOf("clientId" to clientId))
+        applicationCall.respond(HttpStatusCode.Created, clientDTO)
     }
-
     suspend fun getClient() {
-        val clientId = applicationCall.request.headers["ClientId"]?.toIntOrNull() ?: 0
-        if (clientId == 0) {
+        val clientId = applicationCall.request.headers["ClientId"]?.toLongOrNull() ?: 0
+        if (clientId.toInt() == 0) {
             applicationCall.respond(HttpStatusCode.BadRequest, "Идентификатор клиента не передан")
-            return
         }
         val clientDTO = Clients.fetchClient(clientId)
         if (clientDTO != null) {

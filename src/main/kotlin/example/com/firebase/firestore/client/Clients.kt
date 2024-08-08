@@ -19,12 +19,12 @@ object Clients {
             clientDocumentRef.set(clientDTO)
     }
 
-    suspend fun fetchClient(id: Int): ClientDTO? = withContext(Dispatchers.IO) {
+    suspend fun fetchClient(id: Long): ClientDTO? = withContext(Dispatchers.IO) {
         val clientDocumentRef = clientsCollectionRef.document(id.toString())
         val clientDocument = clientDocumentRef.get().get()
         return@withContext if (clientDocument.exists()) {
             ClientDTO(
-                id = clientDocument.getLong(ID)?.toInt()?: 0,
+                id = clientDocument.getLong(ID)?: 0L,
                 name = clientDocument.getString(NAME) ?: "",
                 phone = clientDocument.getString(PHONE) ?: "",
                 userName = clientDocument.getString(USER_NAME)
